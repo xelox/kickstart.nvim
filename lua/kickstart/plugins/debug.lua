@@ -64,17 +64,21 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'cpptools',
       },
     }
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
+    ---@diagnostic disable-next-line: missing-fields
     dapui.setup {
       -- Set icons to characters that are more likely to work in every terminal.
       --    Feel free to remove or use ones that you like more! :)
       --    Don't feel like these are good choices.
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+      ---@diagnostic disable-next-line: missing-fields
       controls = {
+        enabled = true,
         icons = {
           pause = '⏸',
           play = '▶',
@@ -99,6 +103,18 @@ return {
         -- On Windows delve must be run attached or it crashes.
         -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
         detached = vim.fn.has 'win32' == 0,
+      },
+    }
+    dap.configurations.cppdbg = {
+      {
+        name = 'Launch',
+        type = 'cpptools',
+        request = 'launch',
+        program = '${workspaceFolder}/main',
+        cwd = '${workspaceFolder}',
+        stopOnEntry = true,
+        args = {},
+        runInTerminal = false,
       },
     }
   end,
