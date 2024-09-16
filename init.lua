@@ -96,9 +96,9 @@ require('lazy').setup({
   { import = 'kickstart.plugins.gitsigns' },
   { import = 'custom.plugins' },
 }, { ui = { icons = {} } })
-
-vim.cmd 'colorscheme catppuccin-mocha'
-
+vim.cmd 'colorscheme catppuccin'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 vim.cmd 'set ts=4'
+
+-- require 'custom.gdscript'

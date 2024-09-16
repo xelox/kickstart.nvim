@@ -162,8 +162,9 @@ return {
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
       -- tsserver = {},
-      --
-
+      gdtoolkit = {
+        cmd = { 'ncat', 'localhost', '6005' },
+      },
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -208,5 +209,6 @@ return {
         end,
       },
     }
+    require('lspconfig').gdscript.setup {}
   end,
 }
