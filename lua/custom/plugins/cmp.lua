@@ -15,23 +15,34 @@ return { -- Autocompletion
         return 'make install_jsregexp'
       end)(),
       dependencies = {
-        -- `friendly-snippets` contains a variety of premade snippets.
-        --    See the README about individual language/framework/plugin snippets:
-        --    https://github.com/rafamadriz/friendly-snippets
         {
           'rafamadriz/friendly-snippets',
           config = function()
             require('luasnip.loaders.from_vscode').lazy_load()
           end,
         },
+        {
+          'windwp/nvim-autopairs',
+          opts = {
+            fast_wrap = {},
+            disable_filetype = { 'TelescopePrompt', 'vim' },
+          },
+          config = function(_, opts)
+            require('nvim-autopairs').setup(opts)
+
+            -- setup cmp for autopairs
+            local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+            require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
+          end,
+        },
       },
     },
-    'saadparwaiz1/cmp_luasnip',
     'onsails/lspkind.nvim',
-
-    -- Adds other completion capabilities.
-    --  nvim-cmp does not ship with all sources by default. They are split
-    --  into multiple repos for maintenance purposes.
+    -- cmp sources plugins
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-nvim-lua',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
   },
@@ -55,9 +66,9 @@ return { -- Autocompletion
       -- No, but seriously. Please read `:help ins-completion`, it is really good!
       mapping = cmp.mapping.preset.insert {
         -- Select the [n]ext item
-        ['<Down>'] = cmp.mapping.select_next_item(),
+        ['<C-j>'] = cmp.mapping.select_next_item(),
         -- Select the [p]revious item
-        ['<Up>'] = cmp.mapping.select_prev_item(),
+        ['<C-k>'] = cmp.mapping.select_prev_item(),
 
         -- Scroll the documentation window [b]ack / [f]orward
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -109,6 +120,9 @@ return { -- Autocompletion
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
+        { name = 'buffer' },
+        { name = 'nvim_lua' },
+        { name = 'hrsh7th/cmp-cmdline' },
       },
     }
   end,

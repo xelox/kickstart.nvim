@@ -93,11 +93,12 @@ require('lazy').setup({
   },
   { 'Bilal2453/luvit-meta', lazy = true },
 
+  { import = 'kickstart.plugins.gitsigns' },
   { import = 'custom.plugins' },
 }, { ui = { icons = {} } })
 
 vim.cmd 'colorscheme catppuccin-mocha'
-vim.keymap.set('n', 's', '<Nop>', { desc = 'Disabled default S' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+vim.cmd 'set ts=4'
