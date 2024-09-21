@@ -51,6 +51,14 @@ return {
           inactive = { c = { fg = colors.fg, bg = colors.bg } },
         },
       },
+      tabline = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
       sections = {
         -- these are to remove the defaults
         lualine_a = {},
@@ -72,6 +80,14 @@ return {
       },
     }
 
+    local function ins_top_left(component)
+      table.insert(config.tabline.lualine_c, component)
+    end
+
+    local function ins_top_right(component)
+      table.insert(config.tabline.lualine_x, component)
+    end
+
     -- Inserts a component in lualine_c at left section
     local function ins_left(component)
       table.insert(config.sections.lualine_c, component)
@@ -81,6 +97,20 @@ return {
     local function ins_right(component)
       table.insert(config.sections.lualine_x, component)
     end
+
+    local trouble = require 'trouble'
+    local symbols = trouble.statusline {
+      mode = 'lsp_document_symbols',
+      groups = {},
+      title = false,
+      filter = { range = true },
+      format = '{kind_icon}{symbol.name:Normal}',
+      -- The following line is needed to fix the background color
+      -- Set it to the lualine section you want to use
+      hl_group = 'lualine_c_normal',
+    }
+
+    ins_top_left { symbols.get, cond = symbols.has }
 
     ins_left {
       -- mode component
@@ -121,7 +151,7 @@ return {
     }
 
     ins_left {
-      "vim.fn.expand('%')",
+      'filename',
       cond = conditions.buffer_not_empty,
       color = { fg = colors.magenta, gui = 'bold' },
     }
@@ -134,17 +164,6 @@ return {
     }
 
     ins_left { 'location' }
-
-    ins_left {
-      'diagnostics',
-      sources = { 'nvim_diagnostic' },
-      symbols = { error = ' ', warn = ' ', info = ' ' },
-      diagnostics_color = {
-        error = { fg = colors.red },
-        warn = { fg = colors.yellow },
-        info = { fg = colors.cyan },
-      },
-    }
 
     ins_left {
       -- Lsp server name .
@@ -167,7 +186,7 @@ return {
       color = { fg = colors.fg, gui = 'bold' },
     }
 
-    ins_right {
+    ins_top_right {
       "os.date('%a %d %b %H:%M')",
     }
 

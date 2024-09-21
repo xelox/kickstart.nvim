@@ -40,7 +40,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10 -- Minimal number of screen lines to keep above and below the cursor.
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>q', '<cmd>bd<CR>')
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -100,5 +100,5 @@ vim.cmd 'colorscheme catppuccin'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 vim.cmd 'set ts=4'
-
--- require 'custom.gdscript'
+vim.cmd 'set sts=4'
+vim.cmd 'set sw=4'
